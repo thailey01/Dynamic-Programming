@@ -3,7 +3,7 @@ Solve 2 specific types of dynamic programming problems
 1. prompt user for type of problem to be solved - X
 2. prompt user for dimensions of problem - X
 3. prompt user for function values. Save in array - X
-4. Calculate and display returns and decisions - O
+4. Calculate and display returns and decisions - X
 5. Calculate and display optimal return and decisions - O
 6. Give opportunity to run program again - O
 '''
@@ -24,6 +24,21 @@ def pretty_print(matrix):
         result += '\n' + str(i) + '\t';
         for j in range(len(matrix[0])):
             result += str(matrix[i][j]) + '\t';
+        result += '\n';
+    print('\n', result);
+
+def print_return_table(m_matrix, d_matrix):
+    result = '\t\t';
+    for i in range(len(m_matrix[0])):
+        result += str(i) + '\t';
+    result += '\n';
+    for i in reversed(range(len(m_matrix))):
+        result += '\n' + str(i) + '\tm_' + str(i) + '\t';
+        for j in range(len(m_matrix[0])):
+            result += str(m_matrix[i][j]) + '\t';
+        result += '\n\td_' + str(i) + '\t';
+        for j in range(len(m_matrix[0])):
+            result += str(d_matrix[i][j]) + '\t';
         result += '\n';
     print('\n', result);
 
@@ -95,10 +110,7 @@ def solve_dynamic_programming_problem(values):
     d_matrix = init_array(n, m);
     max_value = m_j(values, m_matrix, d_matrix, m, -1, 0);
     print('max_value:', max_value);
-    print('\nm_j table:\n');
-    pretty_print(m_matrix);
-    print('\nd_j table:\n');
-    pretty_print(d_matrix);
+    print_return_table(m_matrix, d_matrix);
 
 # this import is used to retrieve the index of the best next choice
 import operator;
