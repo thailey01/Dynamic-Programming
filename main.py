@@ -84,39 +84,33 @@ def init_array(n, m):
 # Solve the dynamic programming problem using
 # book problems as example
 def solve_dynamic_programming_problem(values):
+    values = [[0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100],
+              [0, 0, 25, 25, 50, 50, 75, 75, 100, 100, 125],
+              [0, 0, 0, 45, 45, 45, 90, 90, 90, 135, 135],
+              [0, 0, 0, 0, 60, 60, 60, 60, 120, 120, 120]];
     n, m = len(values), len(values[0]);
     # The j in f_j
     m_matrix = init_array(n, m);
     # The u in m_j(u)
     d_matrix = init_array(n, m);
-    '''
-    m_j(u) = max (0<=x<=u){f_j(x) + m_j+1(u-x)}
-    m_4(u) = max (0<=x<=10){f_4(x)}
-    call m_j from here
-    '''
+    max_value = m_j(values, m_matrix, d_matrix, m, 0);
+    print('max_value:', max_value);
+##    pretty_print(m_matrix);
+##    pretty_print(d_matrix);
 
 # Values is values matrix
 # u is current column
 # j is current row
-def m_j(values, u, j):
-    '''
-    This is our base case, if we have reached the last row,
-    We will find the function values here and return the max
-    This is what happens at m_4(u)
-    '''
-    if j == len(values[0]) - 1:
-        return max(values[j]);
-    '''
-    This is where we call this function again in order to
-    create a recursive call. Here is an example:
-
-    m = max(values[j][u] + m_j(values, u - x, j + 1))
-
-    basically we're making another function call with
-    an updated j value, representing row we're currently at
-    This will return the max value from last column which
-    we can use to update our current decision
-    '''
+def m_j(values, m_matrix, d_matrix, u, j):
+    if j == len(values) - 1:
+        m_matrix[j] = values[j];
+        d_matrix[j] = [i for i in range(len(values[0]))];
+        return max(m_matrix[j][:u]);
+##    print('before j:', j);
+    max_value = max(values[j][x] + m_j(values, m_matrix, d_matrix, u - x, j + 1)
+                    for x in range(u));
+##    print('after j:', j);
+    return max_value;
     
 if __name__ == '__main__':
     prob_type = -1;
