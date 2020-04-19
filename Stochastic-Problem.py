@@ -23,7 +23,7 @@ for i in range(initialTable.shape[0]):
 
 print('Now enter the probability that oil exists at each site')
 for i in range(probArray.shape[0]):
-    probArray[i] = float(input('Site ' + str(i+1)))
+    probArray[i] = float(input('Site ' + str(i+1) + ': '))
 print('\n\n')
 # The next block of code is for printing out the table in a way that 
 # looks similar to what is given in the book
@@ -82,7 +82,7 @@ for i in range(int(decisionTable.shape[0]/2)):
 
 
 allocation = np.zeros((numOfSites), dtype=int)
-maxReturn = returnTable[returnTable.shape[0]-1][returnTable.shape[1]-1]
+maxReturn = returnTable[0][returnTable.shape[1]-1]
 allocation[0] = decisionTable[0][decisionTable.shape[1]-1]
 
 for i in range(1, allocation.shape[0]):
@@ -168,11 +168,11 @@ Site 3
 
 Now enter the probability that oil exists at each site
 
-Site 1.4
+Site 1: .4
 
-Site 2.3
+Site 2: .3
 
-Site 3.2
+Site 3: .2
 
 
 
@@ -184,7 +184,7 @@ Site 1 	|	0.0 	0.0 	0.1 	0.2 	0.3 	0.5 	0.7 	0.9 	1.0
 Site 2 	|	0.0 	0.1 	0.2 	0.3 	0.4 	0.6 	0.7 	0.8 	1.0 	
 Site 3 	|	0.0 	0.1 	0.1 	0.2 	0.3 	0.5 	0.8 	0.9 	1.0 	
 
-The maximum return is 0.2
+The maximum return is 0.4
 This is possible with the following allocations
 Site 1 should recieve 8 units of money
 Site 2 should recieve 0 units of money
