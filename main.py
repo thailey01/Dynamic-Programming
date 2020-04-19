@@ -79,7 +79,7 @@ def valid_values(values):
 
 # Initialize values matrix
 def init_array(n, m):
-    return [[0] * m] * n;
+    return [[0 for i in range(m)] for j in range(n)];
 
 # Solve the dynamic programming problem using
 # book problems as example
@@ -93,23 +93,30 @@ def solve_dynamic_programming_problem(values):
     m_matrix = init_array(n, m);
     # The u in m_j(u)
     d_matrix = init_array(n, m);
-    max_value = m_j(values, m_matrix, d_matrix, m, 0);
+    max_value = m_j(values, m_matrix, d_matrix, m, -1, 0);
     print('max_value:', max_value);
-##    pretty_print(m_matrix);
-##    pretty_print(d_matrix);
+    print('\nm_j table:\n');
+    pretty_print(m_matrix);
+    print('\nd_j table:\n');
+    pretty_print(d_matrix);
 
-# Values is values matrix
-# u is current column
-# j is current row
-def m_j(values, m_matrix, d_matrix, u, j):
+# this import is used to retrieve the index of the best next choice
+import operator;
+def m_j(values, m_matrix, d_matrix, u, j, counter):
+    # base case: in last row of values matrix
     if j == len(values) - 1:
         m_matrix[j] = values[j];
         d_matrix[j] = [i for i in range(len(values[0]))];
-        return max(m_matrix[j][:u]);
-##    print('before j:', j);
-    max_value = max(values[j][x] + m_j(values, m_matrix, d_matrix, u - x, j + 1)
-                    for x in range(u));
-##    print('after j:', j);
+        return max(values[j][:u]);
+    # list of possible max values
+    poss = [values[j][x] + m_j(values, m_matrix, d_matrix, u - x, j + 1, counter + 1)
+            for x in range(u)];
+    index, max_value = max(enumerate(poss), key = operator.itemgetter(1));
+    # if counter == 0, we've finished our search
+    # it's a return to the beginning
+    if not counter == 0:
+        m_matrix[j][u - 1] = max_value;
+        d_matrix[j][u - 1] = index;
     return max_value;
     
 if __name__ == '__main__':
