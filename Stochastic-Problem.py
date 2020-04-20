@@ -33,17 +33,17 @@ print('The following table displays the probability of finding oil at each'
 for i in range(initialTable.shape[0]+1):
     for j in range(initialTable.shape[1]+1):
         if i==0 and j ==0:
-            print('\t\t|\t', end='')
+            print('\t| ', end='')
         elif i==0 and j!=0:
-            print(j-1,'\t|\t', end='')
+            print(j-1,'\t', end='')
         elif i!=0 and j==0:
-            print('Site', i, '\t|\t', end='')
+            print('Site', i, '\t| ', end='')
         else:
             print(initialTable[i-1][j-1], '\t', end='')
     if i == 0:
         print()
-        for k in range(initialTable.shape[1]*2+2):
-            print('____', end='')
+        for k in range(initialTable.shape[1]*2):
+            print('_____', end='')
     print()
 
 # f is our expected return for each site and it's probability of finding oil
@@ -82,25 +82,25 @@ switch = -1
 print('\n\n\nHere is the table of m_j(u) and d_j(u)\n')
 for j in range((returnTable.shape[1])+1):
         if j ==0:
-            print('\t\t|\t', end='')
+            print('\t| ', end='')
         else:
-            print(j-1,'\t|\t', end='')
+            print(j-1,'\t', end='')
 print()
-for k in range(returnTable.shape[1]*2+2):
-            print('____', end='')
+for k in range(returnTable.shape[1]*2):
+            print('_____', end='')
 print()
 for i in range(returnTable.shape[0]*2):
     for j in range(returnTable.shape[1]+1):
         if switch < 0:
             if j == 0:
-                print('m', returnTable.shape[0]-counter,'(u)\t|\t', end='')
+                print('m', returnTable.shape[0]-counter,'(u)\t| ', end='')
             else:
                 print(round(returnTable[counter][j-1], 4), '\t', end='')
         elif switch > 0:
             if j == 0:
-                print('d', decisionTable.shape[0]-counter,'(u)\t|\t', end='')
+                print('d', decisionTable.shape[0]-counter,'(u)\t| ', end='')
             else:
-                print(decisionTable[counter][j-1], '\t\t', end='')
+                print(decisionTable[counter][j-1], '\t', end='')
     if j == returnTable.shape[1]:
             print()
             switch *= -1
@@ -127,7 +127,6 @@ for i in range(allocation.shape[0]):
 
 '''
 :::output for problem 19.31:::
-    
 How many sites can be developed? 3
 
 How many units of money are at our disposal? 8
@@ -209,28 +208,28 @@ Site 3: .2
 
 The following table displays the probability of finding oil at each site if it exists
 
-		|	0 	|	1 	|	2 	|	3 	|	4 	|	5 	|	6 	|	7 	|	8 	|	
-________________________________________________________________________________
-Site 1 	|	0.0 	0.0 	0.1 	0.2 	0.3 	0.5 	0.7 	0.9 	1.0 	
-Site 2 	|	0.0 	0.1 	0.2 	0.3 	0.4 	0.6 	0.7 	0.8 	1.0 	
-Site 3 	|	0.0 	0.1 	0.1 	0.2 	0.3 	0.5 	0.8 	0.9 	1.0 	
+	| 0 	1 	2 	3 	4 	5 	6 	7 	8 	
+__________________________________________________________________________________________
+Site 1 	| 0.0 	0.0 	0.1 	0.2 	0.3 	0.5 	0.7 	0.9 	1.0 	
+Site 2 	| 0.0 	0.1 	0.2 	0.3 	0.4 	0.6 	0.7 	0.8 	1.0 	
+Site 3 	| 0.0 	0.1 	0.1 	0.2 	0.3 	0.5 	0.8 	0.9 	1.0 	
 
 
 
 Here is the table of m_j(u) and d_j(u)
 
-		|	0 	|	1 	|	2 	|	3 	|	4 	|	5 	|	6 	|	7 	|	8 	|	
-________________________________________________________________________________
-m 3 (u)	|	0.0 	0.02 	0.02 	0.04 	0.06 	0.1 	0.16 	0.18 	0.2 	
-d 3 (u)	|	0 		1 		2 		3 		4 		5 		6 		7 		8 		
-m 2 (u)	|	0.0 	0.03 	0.06 	0.09 	0.12 	0.18 	0.21 	0.24 	0.3 	
-d 2 (u)	|	0 		1 		2 		3 		4 		5 		6 		7 		8 		
-m 1 (u)	|	0.0 	0.03 	0.06 	0.09 	0.12 	0.2 	0.28 	0.36 	0.4 	
-d 1 (u)	|	0 		0 		0 		0 		0 		5 		6 		7 		8 		
+	| 0 	1 	2 	3 	4 	5 	6 	7 	8 	
+__________________________________________________________________________________________
+m 3 (u)	| 0.0 	0.02 	0.02 	0.04 	0.06 	0.1 	0.16 	0.18 	0.2 	
+d 3 (u)	| 0 	1 	2 	3 	4 	5 	6 	7 	8 	
+m 2 (u)	| 0.0 	0.03 	0.06 	0.09 	0.12 	0.18 	0.21 	0.24 	0.3 	
+d 2 (u)	| 0 	1 	2 	3 	4 	5 	6 	7 	8 	
+m 1 (u)	| 0.0 	0.03 	0.06 	0.09 	0.12 	0.2 	0.28 	0.36 	0.4 	
+d 1 (u)	| 0 	0 	0 	0 	0 	5 	6 	7 	8 	
 
 The maximum return is 0.4
 This is possible with the following allocations
 Site 1 should recieve 8 units of money
 Site 2 should recieve 0 units of money
-Site 3 should recieve 0 units of money
+Site 3 should recieve 0 units of money    
 '''
