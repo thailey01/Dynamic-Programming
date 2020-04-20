@@ -6,6 +6,7 @@ April 19, 2020
 import numpy as np
 import sys
 
+
 numOfSites = int(input('How many sites can be developed? ' ))
 money = int(input('How many units of money are at our disposal? '))
 
@@ -18,7 +19,7 @@ print('\nInput the probability of finding oil, if it exists,'
 for i in range(initialTable.shape[0]):
     print('Site', i+1)
     for j in range(initialTable.shape[1]):
-        initialTable[i][j] = float(input(str(j) + ' money allocated:'))
+        initialTable[i][j] = float(input(str(j) + ' money allocated: '))
     print('~~~~~~~~~~~~~~~\n')
 
 print('Now enter the probability that oil exists at each site')
@@ -76,10 +77,40 @@ for i in range(1, returnTable.shape[0]):
         returnTable[i][j] = tempMax
         decisionTable[i][j] = tempK
 
+counter = 0
+switch = -1
+print('\n\n\nHere is the table of m_j(u) and d_j(u)\n')
+for j in range((returnTable.shape[1])+1):
+        if j ==0:
+            print('\t\t|\t', end='')
+        else:
+            print(j-1,'\t|\t', end='')
+print()
+for k in range(returnTable.shape[1]*2+2):
+            print('____', end='')
+print()
+for i in range(returnTable.shape[0]*2):
+    for j in range(returnTable.shape[1]+1):
+        if switch < 0:
+            if j == 0:
+                print('m', returnTable.shape[0]-counter,'(u)\t|\t', end='')
+            else:
+                print(round(returnTable[counter][j-1], 4), '\t', end='')
+        elif switch > 0:
+            if j == 0:
+                print('d', decisionTable.shape[0]-counter,'(u)\t|\t', end='')
+            else:
+                print(decisionTable[counter][j-1], '\t\t', end='')
+    if j == returnTable.shape[1]:
+            print()
+            switch *= -1
+            if switch < 0:
+                counter += 1
+
+
 for i in range(int(decisionTable.shape[0]/2)):
     decisionTable[[decisionTable.shape[0]-i-1, i],:] = decisionTable[[i, decisionTable.shape[0]-i-1], :]
     returnTable[[returnTable.shape[0]-i-1, i],:] = returnTable[[i, returnTable.shape[0]-i-1], :]
-
 
 allocation = np.zeros((numOfSites), dtype=int)
 maxReturn = returnTable[0][returnTable.shape[1]-1]
@@ -105,65 +136,65 @@ Now we will create our initial table
 Input the probability of finding oil, if it exists, with the amount of money allocated to that site
 Site 1
 
-0 money allocated:0
+0 money allocated: 0
 
-1 money allocated:0
+1 money allocated: 0
 
-2 money allocated:.1
+2 money allocated: .1
 
-3 money allocated:.2
+3 money allocated: .2
 
-4 money allocated:.3
+4 money allocated: .3
 
-5 money allocated:.5
+5 money allocated: .5
 
-6 money allocated:.7
+6 money allocated: .7
 
-7 money allocated:.9
+7 money allocated: .9
 
-8 money allocated:1
+8 money allocated: 1
 ~~~~~~~~~~~~~~~
 
 Site 2
 
-0 money allocated:0
+0 money allocated: 0
 
-1 money allocated:.1
+1 money allocated: .1
 
-2 money allocated:.2
+2 money allocated: .2
 
-3 money allocated:.3
+3 money allocated: .3
 
-4 money allocated:.4
+4 money allocated: .4
 
-5 money allocated:.6
+5 money allocated: .6
 
-6 money allocated:.7
+6 money allocated: .7
 
-7 money allocated:.8
+7 money allocated: .8
 
-8 money allocated:1
+8 money allocated: 1
 ~~~~~~~~~~~~~~~
 
 Site 3
 
-0 money allocated:0
+0 money allocated: 0
 
-1 money allocated:.1
+1 money allocated: .1
 
-2 money allocated:.1
+2 money allocated: .1
 
-3 money allocated:.2
+3 money allocated: .2
 
-4 money allocated:.3
+4 money allocated: .3
 
-5 money allocated:.5
+5 money allocated: .5
 
-6 money allocated:.8
+6 money allocated: .8
 
-7 money allocated:.9
+7 money allocated: .9
 
-8 money allocated:1
+8 money allocated: 1
 ~~~~~~~~~~~~~~~
 
 Now enter the probability that oil exists at each site
@@ -183,6 +214,19 @@ ________________________________________________________________________________
 Site 1 	|	0.0 	0.0 	0.1 	0.2 	0.3 	0.5 	0.7 	0.9 	1.0 	
 Site 2 	|	0.0 	0.1 	0.2 	0.3 	0.4 	0.6 	0.7 	0.8 	1.0 	
 Site 3 	|	0.0 	0.1 	0.1 	0.2 	0.3 	0.5 	0.8 	0.9 	1.0 	
+
+
+
+Here is the table of m_j(u) and d_j(u)
+
+		|	0 	|	1 	|	2 	|	3 	|	4 	|	5 	|	6 	|	7 	|	8 	|	
+________________________________________________________________________________
+m 3 (u)	|	0.0 	0.02 	0.02 	0.04 	0.06 	0.1 	0.16 	0.18 	0.2 	
+d 3 (u)	|	0 		1 		2 		3 		4 		5 		6 		7 		8 		
+m 2 (u)	|	0.0 	0.03 	0.06 	0.09 	0.12 	0.18 	0.21 	0.24 	0.3 	
+d 2 (u)	|	0 		1 		2 		3 		4 		5 		6 		7 		8 		
+m 1 (u)	|	0.0 	0.03 	0.06 	0.09 	0.12 	0.2 	0.28 	0.36 	0.4 	
+d 1 (u)	|	0 		0 		0 		0 		0 		5 		6 		7 		8 		
 
 The maximum return is 0.4
 This is possible with the following allocations
