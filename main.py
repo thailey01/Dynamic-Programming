@@ -8,12 +8,6 @@ Solve 2 specific types of dynamic programming problems
 6. Give opportunity to run program again - O
 '''
 
-# Custom error class to handle incorrect number of column
-#  inputs when retrieving values from user
-class IncorrectColumnEntriesError(Exception):
-    '''Raised when value is too small or large'''
-    pass;
-
 # Make it easier to view matrix as rows and coumns
 def pretty_print(matrix):
     result = '\t';
@@ -96,8 +90,19 @@ def solve_dynamic_programming_problem(values):
     # The u in m_j(u)
     d_matrix = init_array(n, m);
     max_value = m_j(values, m_matrix, d_matrix, m, -1, 0);
-    print('max_value:', max_value);
     print_return_table(m_matrix, d_matrix);
+    print('\nMax return: ' + str(max_value));
+    find_optimal_decision(m_matrix, d_matrix);
+
+def find_optimal_decision(m_matrix, d_matrix):
+    index, max_value = max(enumerate(m_matrix[0]), key = operator.itemgetter(1));
+    for i in range(len(m_matrix)):
+        allocations = d_matrix[i][index];
+        if not allocations == 0:
+            print('Allocate ' + str(allocations) +
+                  ' units to product ' + str(index) +
+                  ' for company ' + str(i));
+            index = index - allocations
 
 # this import is used to retrieve the index of the best next choice
 import operator;
@@ -117,15 +122,23 @@ def m_j(values, m_matrix, d_matrix, u, j, counter):
         m_matrix[j][u - 1] = max_value;
         d_matrix[j][u - 1] = index;
     return max_value;
-    
+
 if __name__ == '__main__':
-    prob_type = -1;
-    while prob_type != 0 and prob_type != 1:
-        prob_type = get_problem_type();
-    if prob_type == 0:
-        function_table = [];
-        while len(function_table) == 0:
-            function_table = get_dimensions();
-        solve_dynamic_programming_problem(function_table);
-    else:
-        print("Aarons code");
+    run = 'yes';
+    while run == 'yes':
+        prob_type = -1;
+        while prob_type != 0 and prob_type != 1:
+            prob_type = get_problem_type();
+        if prob_type == 0:
+            function_table = [];
+            while len(function_table) == 0:
+                function_table = get_dimensions();
+            solve_dynamic_programming_problem(function_table);
+        else:
+            with open('Stochastic-Problem.py', 'rb') as source_file:
+                code = compile(source_file.read(), 'Stochastic-Problem.py', 'exec');
+            exec(code);
+        while True:
+            run = input('\nType yes to run again, or no to stop: ');
+            if run == 'yes' or run == 'no':
+                break;
