@@ -123,7 +123,7 @@ for i in range(1, allocation.shape[0]):
 print('\nThe maximum return is', maxReturn)
 print('This is possible with the following allocations')
 for i in range(allocation.shape[0]):
-    print('Site', i+1, 'should recieve', allocation[i], 'units of money')
+    print('Site', i+1, 'should receive', allocation[i], 'units of money')
 
 '''
 :::output for problem 19.31:::
@@ -229,7 +229,7 @@ d 1 (u)	| 0 	0 	0 	0 	0 	5 	6 	7 	8
 
 The maximum return is 0.4
 This is possible with the following allocations
-Site 1 should recieve 8 units of money
-Site 2 should recieve 0 units of money
-Site 3 should recieve 0 units of money    
+Site 1 should receive 8 units of money
+Site 2 should receive 0 units of money
+Site 3 should receive 0 units of money    
 '''
